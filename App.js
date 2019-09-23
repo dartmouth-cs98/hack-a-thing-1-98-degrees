@@ -1,24 +1,56 @@
+/**
+ * Taken from Facebook's React-Native tutorial:
+ * https://facebook.github.io/react-native/docs/network
+ */
+
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { FlatList, ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 
-class Greeting extends Component {
-	render() {
-		return (
-			<View style={{ alignItems: 'center'}}>
-				<Text>Hello {this.props.name}!</Text>
-			</View>
-		);
-	}
-}
+export default class FetchExample extends React.Component {
 
-export default class LotsOfGreetings extends Component {
-	render() {
-		return (
-			<View style={{alignItems: 'center', top: 50}}>
-				<Greeting name='Rexxar' />
-				<Greeting name='Jaina' />
-				<Greeting name='Valeera' />
-			</View>
-		);
-	}
+  constructor(props){
+    super(props);
+    this.state ={ isLoading: true}
+  }
+
+  componentDidMount(){
+    return fetch('https://facebook.github.io/react-native/movies.json')
+      .then((response) => response.json())
+      .then((responseJson) => {
+
+        this.setState({
+          isLoading: false,
+          dataSource: responseJson.movies,
+        }, function(){
+
+        });
+
+      })
+      .catch((error) =>{
+        console.error(error);
+      });
+  }
+
+
+
+  render(){
+
+    if(this.state.isLoading){
+      return(
+        <View style={{flex: 1, padding: 20}}>
+          <ActivityIndicator/>
+        </View>
+      )
+    }
+
+    return(
+      <View style={{flex: 1, paddingTop:20}}>
+        <FlatList
+          data={this.state.dataSource}
+          renderItem={({item}) => <Text>{item.title}, {item.releaseYear}</Text>}
+          keyExtractor={({id}, index) => id}
+        />
+      </View>
+    );
+  }
 }
