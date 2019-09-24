@@ -1,10 +1,13 @@
 /**
- * Taken from Facebook's React-Native tutorial:
+ * Adapted from Facebook's React-Native tutorial:
  * https://facebook.github.io/react-native/docs/network
+ *
+ * Image resizing tips from
+ * https://medium.com/the-react-native-log/tips-for-react-native-images-or-saying-goodbye-to-trial-and-error-b2baaf0a1a4d
  */
 
-import React, { Component } from 'react';
-import { FlatList, ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, Image, FlatList, ActivityIndicator, Text, View  } from 'react-native';
 
 export default class FetchExample extends React.Component {
 
@@ -14,7 +17,7 @@ export default class FetchExample extends React.Component {
   }
 
   componentDidMount(){
-    return fetch('https://facebook.github.io/react-native/movies.json')
+    return fetch("https://facebook.github.io/react-native/movies.json")
       .then((response) => response.json())
       .then((responseJson) => {
 
@@ -45,12 +48,15 @@ export default class FetchExample extends React.Component {
 
     return(
       <View style={{flex: 1, paddingTop:20}}>
-        <FlatList
-          data={this.state.dataSource}
-          renderItem={({item}) => <Text>{item.title}, {item.releaseYear}</Text>}
-          keyExtractor={({id}, index) => id}
-        />
-      </View>
+				<Image 
+					style={{flex: 1, height: undefined, width: undefined}}
+					source={{uri: "https://i.redd.it/r45gn1gjlfo31.jpg"}} 
+				/>
+				<Image 
+					style={{flex: 1, height: undefined, width: undefined}}
+					source={{uri: "https://i.redd.it/3xebson08fo31.png"}}
+				/>
+			</View>
     );
   }
 }
