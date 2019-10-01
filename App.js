@@ -14,7 +14,10 @@
 import React, { Component } from 'react';
 import { Image, FlatList, ActivityIndicator, Button, StyleSheet, Text, View  } from 'react-native';
 
+import RNFS from 'react-native-fs';
+
 export default class FetchExample extends React.Component {
+
   constructor(props){
     super(props);
     this.state ={ 
@@ -22,26 +25,25 @@ export default class FetchExample extends React.Component {
 			showTop: false, 
 			showBot: false,
 			showFox: false,
-			tpIdx: 1,
-			tkIdx: 0
+			tpURI: "https://i.redd.it/cxh05oepfxp31.jpg",
+			tkURI: 0
 		}
   }
 
 	onPressTopButton = ()  => {	
 		this.setState({
-			showTop: true,
+			showTop: !this.state.showTop,
 			showBot: false,
 			showFox: false,
-			tpIdx: Math.floor(Math.random*98)
+			tpURI: RNFS.readFile('~/AwesomeProject/cats/pics/itookapicture/1', 'utf8'),
 		});
 	}
 
 	onPressBottomButton = () => {
 		this.setState({
-			showBot: true,
+			showBot: !this.state.showBot,
 			showTop: false,
 			showFox: false,
-			tkIdx: Math.floor(Math.random()*99)
 		});
 	}
 
@@ -72,7 +74,6 @@ export default class FetchExample extends React.Component {
   }
 
 
-
   render(){
 
     if(this.state.isLoading){
@@ -88,15 +89,15 @@ export default class FetchExample extends React.Component {
 			{this.state.showTop &&
 				<Image 
 					style={{flex: 1, height: undefined, width: undefined, justifyContent: 'center'}}
-					source={{uri: "https://i.redd.it/r45gn1gjlfo31.jpg"}} 
+					source={{uri: this.state.tpURI}} 
 				/>
 				
 			}
 			{this.state.showBot &&
 				<Image 
 					style={{flex: 1, height: undefined, width: undefined, justifyContent: 'center'}}
-					//source={{uri: "https://i.redd.it/3xebson08fo31.png"}}
-					source={{uri: './asfasdfasdf/tuckedinkitties/0.jpeg'}}
+					source={{uri: "https://i.redd.it/3xebson08fo31.png"}}
+					//source={require('./cats/pics/tuckedinkitties/' + this.state.tkIdx + '.jpeg')}
 				/>
 			}
 			{this.state.showFox &&
@@ -108,13 +109,13 @@ export default class FetchExample extends React.Component {
 				<View style={styles.buttonContainer}>
           <Button
             onPress={this.onPressTopButton}
-            title="P R I M E C A T"
+            title="BoxCat"
           />
         </View>
         <View style={styles.buttonContainer}>
           <Button
             onPress={this.onPressBottomButton}
-            title="SnugglyBoi"
+            title="BlanketCat"
             color="#841584"
           />
         </View>
