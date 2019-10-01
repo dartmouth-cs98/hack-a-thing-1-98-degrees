@@ -16,6 +16,19 @@ import { Image, FlatList, ActivityIndicator, Button, StyleSheet, Text, View  } f
 
 import RNFS from 'react-native-fs';
 
+async function fetch_uri(){
+	const response = await fetch("https://www.reddit.com/r/tightpussy/top/.json?sort=top&t=week&limit=1", {
+		headers: {
+			'User-Agent': 'ua.random'
+		}
+	});
+	const myJson = await response.json();
+	var obj = JSON.parse(myJson);
+		
+	var image_uri = obj.data.children[0].data.url;
+
+	return image_uri;
+}
 export default class FetchExample extends React.Component {
 
   constructor(props){
@@ -29,13 +42,14 @@ export default class FetchExample extends React.Component {
 			tkURI: 0
 		}
   }
+	
 
 	onPressTopButton = ()  => {	
 		this.setState({
 			showTop: !this.state.showTop,
 			showBot: false,
 			showFox: false,
-			tpURI: RNFS.readFile('~/AwesomeProject/cats/pics/itookapicture/1', 'utf8'),
+//			tpURI: fetch_uri()
 		});
 	}
 
@@ -89,7 +103,7 @@ export default class FetchExample extends React.Component {
 			{this.state.showTop &&
 				<Image 
 					style={{flex: 1, height: undefined, width: undefined, justifyContent: 'center'}}
-					source={{uri: this.state.tpURI}} 
+					source={{uri: "https://i.redd.it/cxh05oepfxp31.jpg"}} 
 				/>
 				
 			}
