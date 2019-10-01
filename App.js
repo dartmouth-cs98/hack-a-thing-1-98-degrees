@@ -17,22 +17,33 @@ export default class FetchExample extends React.Component {
   constructor(props){
     super(props);
     this.state ={ 
-			isLoading: false
+			isLoading: false,
 			showTop: false, 
-			showBot: false
+			showBot: false,
+			showFox: false
 		}
   }
 
 	onPressTopButton = ()  => {	
 		this.setState({
-			showTop: true,
-			showBot: false
+			showTop: !this.state.showTop,
+			showBot: false,
+			showFox: false
 		});
 	}
 
 	onPressBottomButton = () => {
 		this.setState({
-			showBot: true,
+			showBot: !this.state.showBot,
+			showTop: false,
+			showFox: false
+		});
+	}
+
+	onPressFoxButton = () => {
+		this.setState({
+			showFox: !this.state.showFox,
+			showBot: false,
 			showTop: false
 		});
 	}
@@ -66,7 +77,8 @@ export default class FetchExample extends React.Component {
         </View>
       )
     }
-
+	
+		var foxSource = "foxrudor.de";
     return(
       <View style={{flex: 1, paddingTop: 20}}>
 			{this.state.showTop &&
@@ -82,6 +94,12 @@ export default class FetchExample extends React.Component {
 					source={{uri: "https://i.redd.it/3xebson08fo31.png"}}
 				/>
 			}
+			{this.state.showFox &&
+				<Image 
+					style={{flex: 1, height: undefined, width: undefined, justifyContent: 'center'}}
+					source={{uri: "https://foxrudor.de"}}
+				/>	
+			}
 				<View style={styles.buttonContainer}>
           <Button
             onPress={this.onPressTopButton}
@@ -92,6 +110,13 @@ export default class FetchExample extends React.Component {
           <Button
             onPress={this.onPressBottomButton}
             title="SnugglyBoi"
+            color="#841584"
+          />
+        </View>
+        <View style={styles.buttonContainer}>
+          <Button
+            onPress={this.onPressFoxButton}
+            title="Random Fox"
             color="#841584"
           />
         </View>
