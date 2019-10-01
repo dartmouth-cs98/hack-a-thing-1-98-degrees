@@ -7,36 +7,41 @@
  *
  * Image resizing tips from
  * https://medium.com/the-react-native-log/tips-for-react-native-images-or-saying-goodbye-to-trial-and-error-b2baaf0a1a4d
+ *
+ * need to 
  */
 
 import React, { Component } from 'react';
 import { Image, FlatList, ActivityIndicator, Button, StyleSheet, Text, View  } from 'react-native';
 
 export default class FetchExample extends React.Component {
-
   constructor(props){
     super(props);
     this.state ={ 
 			isLoading: false,
 			showTop: false, 
 			showBot: false,
-			showFox: false
+			showFox: false,
+			tpIdx: 1,
+			tkIdx: 0
 		}
   }
 
 	onPressTopButton = ()  => {	
 		this.setState({
-			showTop: !this.state.showTop,
+			showTop: true,
 			showBot: false,
-			showFox: false
+			showFox: false,
+			tpIdx: Math.floor(Math.random*98)
 		});
 	}
 
 	onPressBottomButton = () => {
 		this.setState({
-			showBot: !this.state.showBot,
+			showBot: true,
 			showTop: false,
-			showFox: false
+			showFox: false,
+			tkIdx: Math.floor(Math.random()*99)
 		});
 	}
 
@@ -78,7 +83,6 @@ export default class FetchExample extends React.Component {
       )
     }
 	
-		var foxSource = "foxrudor.de";
     return(
       <View style={{flex: 1, paddingTop: 20}}>
 			{this.state.showTop &&
@@ -91,7 +95,8 @@ export default class FetchExample extends React.Component {
 			{this.state.showBot &&
 				<Image 
 					style={{flex: 1, height: undefined, width: undefined, justifyContent: 'center'}}
-					source={{uri: "https://i.redd.it/3xebson08fo31.png"}}
+					//source={{uri: "https://i.redd.it/3xebson08fo31.png"}}
+					source={{uri: './asfasdfasdf/tuckedinkitties/0.jpeg'}}
 				/>
 			}
 			{this.state.showFox &&
@@ -116,7 +121,7 @@ export default class FetchExample extends React.Component {
         <View style={styles.buttonContainer}>
           <Button
             onPress={this.onPressFoxButton}
-            title="Random Fox"
+            title="Fox Roulette"
             color="#841584"
           />
         </View>
